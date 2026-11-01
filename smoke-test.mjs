@@ -155,14 +155,19 @@ await evaluate(`__t.items()[3].querySelector('.delete').click()`);
 
 // 5. toggle
 await evaluate(`__t.items()[0].querySelector('input[type=checkbox]').click()`);
-check('toggle marks done', await evaluate(`__t.items()[0].classList.contains('done')`) === true);
+check('toggle marks done', await evaluate(`__t.items()[2].classList.contains('done')`) === true);
 check('count updates', await evaluate(`__t.count()`) === '2 tasks left', await evaluate(`__t.count()`));
+check('pending section lists only unfinished tasks',
+  await evaluate(`document.querySelectorAll('#todo-list .todo:not(.done)').length`) === 2
+    && await evaluate(`document.querySelectorAll('#todo-list .todo').length`) === 2);
 
 // 6. filters
 await evaluate(`__t.filter('active')`);
 check('active filter hides done', await evaluate(`__t.items().length`) === 2);
 await evaluate(`__t.filter('done')`);
 check('done filter shows only done', await evaluate(`__t.items().length`) === 1);
+check('pending heading hides with no pending tasks showing',
+  await evaluate(`document.getElementById('pending-heading').hidden`) === true);
 await evaluate(`__t.filter('all')`);
 
 // 7. persistence across reload
@@ -171,7 +176,7 @@ await sleep(600);
 await evaluate(PAGE_HELPERS);
 check('tasks persist across reload', await evaluate(`__t.items().length`) === 3,
   `got ${await evaluate(`__t.items().length`)}`);
-check('done state persists', await evaluate(`__t.items()[0].classList.contains('done')`) === true);
+check('done state persists', await evaluate(`__t.items()[2].classList.contains('done')`) === true);
 
 // 8. edit via double-click
 await evaluate(`__t.items()[1].querySelector('.title')
@@ -201,7 +206,7 @@ check('escape discards edit', (await evaluate(`__t.titles()`))[1] === 'write MOR
   await evaluate(`JSON.stringify(__t.titles())`));
 
 // 10. delete
-await evaluate(`__t.items()[2].querySelector('.delete').click()`);
+await evaluate(`__t.items()[1].querySelector('.delete').click()`);
 check('delete removes one task', await evaluate(`__t.items().length`) === 2);
 
 // 11. clear completed

@@ -20,12 +20,13 @@ You can also just open `index.html` directly in a browser — the app works fine
 npm test           # dev server must be running
 ```
 
-Drives the real app in headless Chrome over the DevTools protocol and checks 18 behaviors: adding, toggling, editing, deleting, filtering, the task count, persistence across reload, HTML escaping, and recovery from corrupted storage.
+Drives the real app in headless Chrome over the DevTools protocol and checks 20 behaviors: adding, toggling, editing, deleting, filtering, the Pending section, the task count, persistence across reload, HTML escaping, and recovery from corrupted storage.
 
 ## Features
 
 - Add tasks, check them off, delete them
 - Double-click a task to edit — <kbd>Enter</kbd> saves, <kbd>Esc</kbd> cancels, saving an empty title deletes it
+- Unfinished tasks sit under a Pending heading, with completed tasks below them
 - Filter by All / Active / Done, with a live count of remaining tasks
 - "Clear completed" removes all finished tasks at once
 - Light and dark theme, following your OS setting

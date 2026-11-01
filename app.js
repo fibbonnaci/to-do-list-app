@@ -6,6 +6,8 @@
   var form = document.getElementById('new-todo-form');
   var input = document.getElementById('new-todo-input');
   var list = document.getElementById('todo-list');
+  var doneList = document.getElementById('done-list');
+  var pendingHeading = document.getElementById('pending-heading');
   var emptyState = document.getElementById('empty-state');
   var countEl = document.getElementById('count');
   var clearDoneBtn = document.getElementById('clear-done');
@@ -189,11 +191,15 @@
     var items = visible();
 
     list.textContent = '';
-    var frag = document.createDocumentFragment();
+    doneList.textContent = '';
+    var pendingFrag = document.createDocumentFragment();
+    var doneFrag = document.createDocumentFragment();
     items.forEach(function (todo) {
-      frag.appendChild(renderTodo(todo));
+      (todo.done ? doneFrag : pendingFrag).appendChild(renderTodo(todo));
     });
-    list.appendChild(frag);
+    pendingHeading.hidden = pendingFrag.childNodes.length === 0;
+    list.appendChild(pendingFrag);
+    doneList.appendChild(doneFrag);
 
     var remaining = todos.filter(function (t) {
       return !t.done;

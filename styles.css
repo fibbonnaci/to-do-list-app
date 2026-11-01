@@ -6,6 +6,7 @@
   --border: #e3e5e8;
   --accent: #3b6cf0;
   --danger: #d1443c;
+  --success: #15803d;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -76,7 +77,7 @@ button:focus-visible {
   font-size: 1rem;
   font-weight: 600;
   color: #fff;
-  background: var(--accent);
+  background: var(--success);
   border: none;
   border-radius: 8px;
   cursor: pointer;
